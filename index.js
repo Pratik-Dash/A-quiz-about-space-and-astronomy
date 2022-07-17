@@ -7,21 +7,23 @@ var playerChoice = "Yes"
 //0 - New Player 1 - Existing player
 var highScores = [
   {
-    "Name":"Asish",
+    "Name":"Pratik",
     "Score":3
   },
   {
-    "Name":"Subhasish",
+    "Name":"Ashish",
     "Score":4
   }
 ]
 function welcomePlayer(newOrExistingPlayer)
   {
     
-    console.log("Welcome Player!")
+    console.log("Hi Player!")
     console.log("\n")
     playerName = readlinesync.question("Please enter your name \n");
     console.log("\n")
+    console.log("Welcome to a quiz about space and astronomy \n")
+    console.log("checking highscores ... \n")
     for(var i = 0;i<highScores.length;i++)
       {
         if(playerName.toLowerCase() == highScores[i].Name.toLowerCase())
@@ -37,10 +39,12 @@ function welcomePlayer(newOrExistingPlayer)
       }
         if(newOrExistingPlayer == 1)
         {
-           console.log("You already are an existing player. Your highest score is "+highScores[i].Score);
-          console.log("\n")
+           console.log("You already are an existing player.");
+           console.log("Your highest score is "+highScores[i].Score)           
+           console.log("\n")
 
-         var playerChoice = readlinesync.question("Please note that your score will only be updated if current score is higher than your previous high score. Would you like to continue? (Enter 'Y' or 'N') \n")
+         console.log("Please note that your score will only be updated if current score is higher than your previous high score.\n")
+          var playerChoice = readlinesync.question("Would you like to continue? (Enter 'Y' or 'N')")
 
           if(playerChoice === "Y" )
           {
@@ -52,7 +56,7 @@ function welcomePlayer(newOrExistingPlayer)
           
         }
         else{
-          console.log("You are a new player. Starting Quiz...")
+          console.log("You are a new player\n")
           Play(playerName,newOrExistingPlayer)
         }
         
@@ -64,27 +68,35 @@ function Play(playerName,newOrExistingPlayer){
   var playerStatus = newOrExistingPlayer
   var name  = playerName
   var score = 0;
-  console.log("Starting quiz......\n")
+  console.log("Starting quiz...\n")
   var questions = [
     {
-      "question":"Who is my favorite Superhero?\n",
-      "answer":"The Flash"
+      "question":"Which planet is the largest in the solar system?\n",
+      "answer":"Jupiter"
     },
     {
-      "question":"What is my all time favorite food?\n",
-      "answer":"Noodles"
+      "question":"what is the cyclonic storm in jupiter that is visible from space called?\n",
+      "answer":"The Great Red Spot"
     },
     {
-    "question":"What is my favorite thing to do while bored?\n",
-    "answer":"Playing video games"
+    "question":"In a black hole what is the point from where even light cannot escape called?\n",
+    "answer":"Event Horizon"
     },
     {
-      "question":"What is my favorite videogame?\n",
-      "answer":"Mortal Kombat"
+      "question":"what is the term used for the planets which does not orbit around a star?\n",
+      "answer":"Rogue Planets"
     },
     {
-    "question":"what is my favorite programming language?\n",
-    "answer":"C#"
+    "question":"What is the only moon in the solar system to have an Atmosphere of its own?\n",
+    "answer":"Titan"
+    },
+    {
+    "question":"Which planet is the fastest spinning planet in the solar system?\n",
+    "answer":"Neptune"
+    },
+    {
+    "question":"which moon in the solar system is the most geologically active and has frequent volcanic eruptions\n",
+    "answer":"IO"
     }
 ]
   console.log(chalk.inverse('your current score is : '+score));
