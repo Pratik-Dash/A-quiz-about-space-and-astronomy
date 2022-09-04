@@ -1,196 +1,176 @@
 import chalk from "chalk";
 import readlinesync from 'readline-sync'
-var playerScore = 0
-var playerName = ""
-var newOrExistingPlayer = 0
-var playerChoice = "Yes"
-//0 - New Player 1 - Existing player
 var highScores = [
   {
-    "Name":"Pratik",
-    "Score":3
+    "Name": "Asish",
+    "Score": 9
   },
   {
-    "Name":"Ashish",
-    "Score":4
-  }
-]
-function welcomePlayer(newOrExistingPlayer)
+    "Name": "Subhasish",
+    "Score": 8
+  },
   {
-    
-    console.log("Hi Player!")
-    console.log("\n")
-    playerName = readlinesync.question("Please enter your name \n");
-    console.log("\n")
-    console.log("Welcome to a quiz about space and astronomy \n")
-    console.log("checking highscores ... \n")
-    for(var i = 0;i<highScores.length;i++)
-      {
-        if(playerName.toLowerCase() == highScores[i].Name.toLowerCase())
-        {
-          newOrExistingPlayer = 1
-          break;
-         
-        
-      }
-        else{
-          newOrExistingPlayer = 0
-        }
-      }
-        if(newOrExistingPlayer == 1)
-        {
-           console.log("You already are an existing player.");
-           console.log("Your highest score is "+highScores[i].Score)           
-           console.log("\n")
-
-         console.log("Please note that your score will only be updated if current score is higher than your previous high score.\n")
-          var playerChoice = readlinesync.question("Would you like to continue? (Enter 'Y' or 'N')")
-
-          if(playerChoice === "Y" )
-          {
-            Play(playerName,newOrExistingPlayer)
-          }
-          else{
-            return 
-          }
-          
-        }
-        else{
-          console.log("You are a new player\n")
-          Play(playerName,newOrExistingPlayer)
-        }
-        
-    
-    
+    "Name": "Vishal",
+    "Score": 7
   }
-//List of Questions
-function Play(playerName,newOrExistingPlayer){
-  var playerStatus = newOrExistingPlayer
-  var name  = playerName
-  var score = 0;
-  console.log("Starting quiz...\n")
-  var questions = [
-    {
-      "question":"Which planet is the largest in the solar system?\n",
-      "answer":"Jupiter"
-    },
-    {
-      "question":"what is the cyclonic storm in jupiter that is visible from space called?\n",
-      "answer":"The Great Red Spot"
-    },
-    {
-    "question":"In a black hole what is the point from where even light cannot escape called?\n",
-    "answer":"Event Horizon"
-    },
-    {
-      "question":"what is the term used for the planets which does not orbit around a star?\n",
-      "answer":"Rogue Planets"
-    },
-    {
-    "question":"What is the only moon in the solar system to have an Atmosphere of its own?\n",
-    "answer":"Titan"
-    },
-    {
-    "question":"Which planet is the fastest spinning planet in the solar system?\n",
-    "answer":"Neptune"
-    },
-    {
-    "question":"which moon in the solar system is the most geologically active and has frequent volcanic eruptions\n",
-    "answer":"IO"
-    }
+
 ]
-  console.log(chalk.inverse('your current score is : '+score));
-console.log("------------------")
-   console.log("\n")
-var userAnswer;
+function WelcomeScreen() {
+  console.log(chalk.blue('Welcome player \n'))
+  var playerName = readlinesync.question("Please enter your name \n");
+  console.log(chalk.blueBright('Welcome ' + playerName))
 
-  for(var i = 0;i<questions.length;i++)
-    {
-      userAnswer = readlinesync.question(questions[i].question)
-      console.log("\n")
-      
-    if(userAnswer.toLowerCase() === questions[i].answer.toLowerCase())
-      {
-        
-        score++;
-        console.log(chalk.bgGreen('Correct Answer !')+"\n"+chalk.inverse('Your Score is : '+score))
-        console.log("------------------")
-        console.log("\n")
-      }
-      else{
-        console.log(chalk.bgRed('Wrong Answer')+"\n"+ chalk.inverse('your score is : '+score))
-        console.log("------------------")
-        console.log("\n")
-      }
-    }
 
-  CalculateHighScore(score,name,playerStatus)
+  var playerChoice = readlinesync.question(chalk.red("Enter 1 to begin game and 2 to view current highest scores and 3 to exit the game \n"))
+  if (playerChoice == 2) {
+    showLeaderBoard()
+  } else if (playerChoice == 1) {
+    playGame(playerName)
+  }
+  else {
+    return
+  }
+
+}
+function showLeaderBoard() {
+  for (var i = 0; i < highScores.length; i++) {
+    console.log(chalk.magentaBright(i + 1 + " " + highScores[i].Name + " - " + highScores[i].Score))
+  }
+}
+function playGame(playerName) {
+  var score = Play()
+  checkHighScores(playerName, score)
+
+
 }
 
-function CalculateHighScore(score,name,playerStatus)
-  {
-    if(playerStatus == 1)
-    {
-      for(var i = 0;i<highScores.length;i++)
-      {
-        if(playerName.toLowerCase() == highScores[i].Name.toLowerCase())
-        {
-          if(score>highScores[i].Score)
-          {
-            console.log("Your previous score was : "+highScores[i].Score+" Your new Score is : "+score+" Congratulations your beat your own highscore")
-            highScores[i].Score = score;
-          }
-        }
-      }
-      console.log("\n")
-      console.log("Top Scorers \n")
-      
-      for(var i = 0;i<highScores.length;i++)
-        {
-          console.log(highScores[i].Name+" - "+highScores[i].Score)
-        }
+//List of Questions
+function Play() {
+  var score = 0;
+  console.log("Starting quiz......\n")
+  var questions = [
+    {//1
+      "question": "Which planet is the largest in the solar system? \n",
+      "options": ["1. Jupiter", "2. Saturn", "3. Nuptune", "4. Uranus"],
+      "correctAnswer": "1. Jupiter"
+    },
+    {//2
+      "question": "what is the cyclonic storm in jupiter that is visible from space called? \n",
+      "options": ["1. The Great Black spot ", "2. The Great Red Spot ", "3. Rose over Jupiter ", "4. GJ215677 "],
+      "correctAnswer": "2. The Great Red Spot "
+    },
+    {//3
+      "question": "In a black hole, what is the name of the point from where even light cannot escape? \n",
+      "options": ["1. Final Point ", "2. The point of no return ", "3. Event Horizon ", "4. The center of black hole "],
+      "correctAnswer": "3. Event Horizon "
+    },
+    {//4
+      "question": "what is the term used for the planets which does not orbit around a star? \n",
+      "options": ["1. Lonely Planets ", "2. Lost Planets ", "3. Wandering planets", "4. Rogue planets "],
+      "correctAnswer": "4. Rogue planets "
+    },
+    {//5
+      "question": "What is the only moon in the solar system to have an Atmosphere of its own? \n",
+      "options": ["1. Phobos ", "2. Demos ", "3. Titan ", "4. Europa"],
+      "correctAnswer": "3. Titan "
+    },
+    {//6
+      "question": "Which planet is the fastest spinning planet in the solar system? \n",
+      "options": ["1. Neptune ", "2. Uranus ", "3. Jupiter ", "4. Pluto"],
+      "correctAnswer": "1. Neptune "
+    },
+    {//7
+      "question": "which moon in the solar system is the most geologically active and has frequent volcanic eruptions \n",
+      "options": ["1. IO ", "2. Demos ", "3. Phobos ", "4. Titan "],
+      "correctAnswer": "1. IO "
+    },
+    {//8
+      "question": "The day on which the Sun’s direct rays cross the celestial equator is called: \n",
+      "options": ["1. The Equinox ", "2. The Eliptic ", "3. The Solistice ", "4. The Aphelion "],
+      "correctAnswer": "1. The Equinox "
+    },
+    {//9
+      "question": "What is the smallest planet in the solar system by mass? \n",
+      "options": ["1. Mars ", "2. Mercury ", "3. Pluto ", "4. Earth "],
+      "correctAnswer": "2. Mercury "
+    },
+    {//10
+      "question": "What is the visible part of the Sun called? \n",
+      "options": ["1. The Lithosphere ", "2. The Photosphere ", "3. The Ionosphere ", "4. The Stratosphere "],
+      "correctAnswer": "2. The Photosphere "
     }
-    else{
-      var temp = false;
-      for(var i = 0;i<highScores.length;i++)
-        {
-          if(score>highScores[i].Score)
-          {
-            temp = true
-          }else{
-            temp == false
-          }
-          
-        }
-      if(temp == true)
-      {
-        console.log("New high score detected! \n")
-        console.log("Adding new high score...\n")
-        highScores.push({
-          "Name":playerName,
-          "Score":score
-          
-        })
-        
-      }
-      else{
-        console.log("your final score is "+score)
-      }
-     
+  ]
+  console.log("Your current Score is " + score);
 
-      console.log("Top Scorers")
-      console.log("------------------")
-      for(var i = 0;i<highScores.length;i++)
-        {
-          console.log(highScores[i].Name+" - "+highScores[i].Score);
-        }
-      
+  for (var i = 0; i < questions.length; i++) {
+    console.log(questions[i].question)
+    console.log(...questions[i].options)
+    console.log()
+    var userAnswer = readlinesync.question("Pick between [1-4] - ")
+    if (questions[i].options[userAnswer - 1] == questions[i].correctAnswer) {
+      console.log()
+      score++
+      console.log(chalk.green("Correct Answer!"))
+      console.log()
+      console.log(chalk.yellowBright("Your score is " + score))
+      console.log("--------------------------\n")
     }
-    
+    else {
+      console.log()
+      console.log(chalk.red('Wrong Answer'))
+      console.log()
+      console.log(chalk.yellowBright("Your score is " + score))
+      console.log("--------------------------\n")
+    }
   }
 
+  return score;
 
-  welcomePlayer(newOrExistingPlayer)
+}
+
+function checkHighScores(playerName, score) {
+  var [currentMaxScore, currentMaxScorerName, index] = getCurrentHighScore()
+
+  if (score > currentMaxScore) {
+    console.log(chalk.green('Congratulations!! ' + playerName + ' You beat ' + currentMaxScorerName + " to have the highest score in the game.\n"))
+    highScores[index].Name = playerName
+    highScores[index].Score = score
+    showLeaderBoard()
+    console.log(chalk.redBright("Please contact the admin to permanetly update the leaderboard with your new score.\n"))
+    console.log("Thank you for playing.")
+  }
+  else {
+    console.log(chalk.blueBright("Your final Score is " + score))
+    console.log(chalk.blue("Thank you for playing."))
+  }
+}
+
+function getCurrentHighScore() {
+  var highscore = highScores[0].Score
+  var name = highScores[0].Name
+  var index = 0
+  for (var i = 0; i < highScores.length; i++) {
+    if (highScores[i].Score > highscore) {
+      highscore = highScores[i].Score
+      name = highScores[i].Name
+      index = i
+    }
+  }
+  return [highscore, name, index]
+}
+
+WelcomeScreen()
+
+
+
+
+
+
+
+
+
+
+
 
 
 
